@@ -1,0 +1,25 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  @apply bg-slate-50 font-sans m-0;
+}
+
+h1 {
+  @apply font-bold text-4xl text-blue-400;
+}
+
+h2 {
+  @apply font-bold text-2xl text-blue-500;
+}
+
+h3 {
+  @apply font-bold text-xl text-slate-800;
+}
+
+p {
+  @apply font-light text-lg text-slate-800;
+}
