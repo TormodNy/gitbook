@@ -1,3 +1,5 @@
+import ReactTimeAgo from 'react-time-ago'
+
 function Post ({ post }) {
   return (
     <div className="flex bg-slate-100 p-4 gap-2">
@@ -8,7 +10,7 @@ function Post ({ post }) {
     
         <h3>{post.title}</h3>
         <p className="whitespace-normal">{post.body}</p>
-        <i className="font-light text-sm">Posted by {post.user.login} on {post.created_at}</i>
+        <i className="font-light text-sm">Posted by {post.user.login} <ReactTimeAgo date={post.created_at} locale="en-US"/></i>
       </div>
     </div>
   );
