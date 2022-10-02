@@ -1,12 +1,12 @@
 import { useContext, useEffect, useState } from "react";
 import { getPosts } from "../api/Posts";
-import { TokenContext } from "../App";
+import { UserContext } from "../App";
 import CreatePost from "./CreatePost";
 import Post from "./Post";
 
 function PostList () {
   const [posts, setPosts] = useState(null);
-  const { token } = useContext(TokenContext);
+  const { token } = useContext(UserContext);
 
   useEffect(() => {
     if (!posts) {
@@ -15,7 +15,7 @@ function PostList () {
   })
 
   return (
-    <div className="m-auto pt-1 p-4 xl:w-[50vw] md:w-[80vw] flex flex-col gap-2 bg-slate-200">
+    <div className="m-auto pt-2 p-6 xl:w-[50vw] md:w-[80vw] flex flex-col gap-2 bg-slate-200 rounded-lg">
       <h2>Posts</h2>
       <CreatePost />
       {posts

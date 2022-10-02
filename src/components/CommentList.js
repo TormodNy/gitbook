@@ -1,13 +1,13 @@
 import { useContext, useEffect, useState } from "react";
 import { getComments, getPosts } from "../api/Posts";
-import { TokenContext } from "../App";
+import { UserContext } from "../App";
 import Comment from "./Comment";
 import CreateComment from "./CreateComment";
 
 function CommentList ({ post }) {
   const [comments, setComments] = useState(null);
 
-  const { token } = useContext(TokenContext);
+  const { token } = useContext(UserContext);
 
   useEffect(() => {
     if (!comments) {

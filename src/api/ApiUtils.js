@@ -10,20 +10,22 @@ function getOptions (token) {
   };
 }
 
-export function getRequest (url, token) {
+export async function getRequest (url, token) {
   if (!token) {
     console.warn("Token is empty.");
   }
 
-  return axios.get(url, getOptions(token))
-    .then(response => response.data);
+  return await axios.get(url, getOptions(token))
+    .then(response => response.data)
+    .catch(error => null);
 }
 
-export function postRequest (url, data, token) {
+export async function postRequest (url, data, token) {
   if (!token) {
     console.warn("Token is empty.");
   }
 
-  return axios.post(url, data, getOptions(token))
-    .then(response => response.data);
+  return await axios.post(url, data, getOptions(token))
+    .then(response => response.data)
+    .catch(error => null);
 }
