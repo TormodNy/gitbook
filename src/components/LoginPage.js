@@ -13,7 +13,6 @@ function LoginPage () {
   async function authenticate () {
     if (tempToken) {
       const user = await getUser(tempToken);
-      console.log(user);
       
       if (user) {
         setUser({
