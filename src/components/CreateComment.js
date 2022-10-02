@@ -1,12 +1,12 @@
 import { TextField, Button } from "@mui/material";
 import { useContext, useState } from "react";
 import { postComments } from "../api/Posts";
-import { TokenContext } from "../App";
+import { UserContext } from "../App";
 
 function CreateComment ({ post }) {
   const [body, setBody] = useState("");
 
-  const { token } = useContext(TokenContext);
+  const { token } = useContext(UserContext);
 
   function publishComment () {
     postComments(post, body, token);

@@ -1,20 +1,28 @@
 import { Button, Checkbox, TextField, Typography } from "@mui/material";
 import { useContext, useState } from "react";
-import { getTokenValidity } from "../api/Authorization";
-import { TokenContext } from "../App";
+import { getUser } from "../api/Users";
+import { UserContext } from "../App";
 
 function LoginPage () {
 
   const [tempToken, setTempToken] = useState("");
   const [tokenMessage, setTokenMessage] = useState("");
   const [accept, setAccept] = useState(false);
-  const { setToken } = useContext(TokenContext);
+  const { setToken, setUser } = useContext(UserContext);
 
   async function authenticate () {
     if (tempToken) {
-      const tokenValidity = await getTokenValidity(tempToken);
+      const user = await getUser(tempToken);
+      console.log(user);
       
-      if (tokenValidity) {
+      if (user) {
+        setUser({
+          name: user.name,
+          login: user.login,
+          bio: user.bio,
+          avatar_url: user.avatar_url,
+          html_url: user.html_url,
+        });
         setToken(tempToken);
         setTokenMessage("");
       }else {
@@ -25,12 +33,12 @@ function LoginPage () {
   }
 
   return (
-    <div className="m-auto pt-1 p-4 xl:w-[50vw] md:w-[80vw] flex flex-col gap-2 bg-slate-200">
+    <div className="m-auto pt-1 p-4 xl:w-[50vw] md:w-[80vw] flex flex-col gap-2 bg-slate-200 rounded-lg">
       <div className="flex flex-col p-2 w-full gap-4">
         <h2>Log in</h2>
 
         <p>
-          To be able to use GitBook you have to authenticate yourself with a GitHub access token
+          To use GitBook you have to authenticate yourself with a GitHub access token
           which gives the app access to reading and publishing to public repositories on your behalf.
         </p>
 

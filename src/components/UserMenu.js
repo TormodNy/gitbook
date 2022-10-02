@@ -1,25 +1,30 @@
 import { useContext, useState } from "react";
-import PersonIcon from "@mui/icons-material/Person";
-import { Card, CardContent, TextField, Typography } from "@mui/material";
-import { TokenContext } from "../App";
+import { Button, Card, CardContent, Typography } from "@mui/material";
+import { UserContext } from "../App";
 
 function UserMenu () {
   const [open, setOpen] = useState(false);
+  const {setToken, user, setUser} = useContext(UserContext);
 
-  const {token, setToken} = useContext(TokenContext);
+  function logOut () {
+    setUser(null);
+    setToken("");
+  }
 
   return (
-    <div className="fixed right-4 top-4 bg-blue-500 w-16 h-16 rounded-full">
-      <button onClick={() => setOpen(!open)}>
-        <PersonIcon className="m-2" sx={{fontSize: 48}} htmlColor="white" />
+    <div className="fixed right-4 top-4 w-16 h-16">
+      <button onClick={() => setOpen(!open)} className="bg-blue-500 rounded-full w-16 h-16 transition-opacity hover:opacity-50">
+        <img src={user.avatar_url} className="rounded-full w-14 h-14 ml-1"/>
       </button>
 
       {open
         ? 
-        <Card className="relative top-4 right-48 w-64 p-2">
-          <CardContent>
-            <Typography variant="h6">Add token</Typography>
-            <TextField label="Token" value={token} onChange={e => setToken(e.target.value)} InputProps={{className: "bg-white"}} helperText="Used for authentication"></TextField>
+        <Card className="relative top-4 right-48 w-64 p-2 pb-0">
+          <CardContent className="flex flex-col">
+            <Typography variant="h6" fontWeight="bold">{user.login}</Typography>
+            <Typography fontWeight="light">{user.name}</Typography>
+            <br />
+            <Button onClick={logOut} variant="contained">Log out</Button>
           </CardContent>
         </Card>
         : null

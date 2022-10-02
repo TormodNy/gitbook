@@ -3,7 +3,7 @@ import CommentList from './CommentList';
 
 function Post ({ post }) {
   return (
-    <div className="flex bg-slate-100 p-4 gap-2">
+    <div className="flex bg-slate-100 p-4 gap-2 rounded-md">
       <div className="min-w-[48px]">
         <img src={post.user.avatar_url} className="rounded-full w-12" />
       </div>
