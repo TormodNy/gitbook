@@ -3,15 +3,17 @@ import { useContext, useState } from "react";
 import { postComments } from "../api/Posts";
 import { UserContext } from "../App";
 
-function CreateComment ({ post }) {
+function CreateComment ({ post, addComment }) {
   const bodyCharLimit = 1000;
 
   const [body, setBody] = useState("");
   const { token } = useContext(UserContext);
 
-  function publishComment () {
-    postComments(post, body, token);
+  async function publishComment () {
     setBody("");
+    
+    const comment = await postComments(post, body, token);
+    addComment(comment);
   }
 
   function updateBody (e) {
