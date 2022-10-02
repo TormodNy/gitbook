@@ -1,22 +1,29 @@
 import axios from "axios";
 
-export function getRequest (url) {
-  return axios.get(url, {
+function getOptions (token) {
+  return {
     responseType: 'json',
     headers: {
-      'Accept': 'application/vnd.github.v3+json'
-    }
-  })
+      'Accept': 'application/vnd.github.v3+json',
+      'Authorization': `token ${token}`,
+    },
+  };
+}
+
+export function getRequest (url, token) {
+  if (!token) {
+    console.warn("Token is empty.");
+  }
+
+  return axios.get(url, getOptions(token))
     .then(response => response.data);
 }
 
 export function postRequest (url, data, token) {
-  return axios.post(url, data, {
-    responseType: 'json',
-    headers: {
-      'Accept': 'application/vnd.github.v3+json',
-      'Authorization': `token ${token}`
-    }
-  })
+  if (!token) {
+    console.warn("Token is empty.");
+  }
+
+  return axios.post(url, data, getOptions(token))
   .then(response => response.data);
 }

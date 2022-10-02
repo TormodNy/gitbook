@@ -7,7 +7,7 @@ function Post ({ post }) {
       <div className="min-w-[48px]">
         <img src={post.user.avatar_url} className="rounded-full w-12" />
       </div>
-      <div className="flex flex-col p-2 w-full text-left gap-4">
+      <div className="flex flex-col p-2 w-full gap-4">
     
         <h3>{post.title}</h3>
         <p className="whitespace-normal">{post.body}</p>

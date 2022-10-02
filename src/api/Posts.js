@@ -1,7 +1,7 @@
 import { getRequest, postRequest } from "./ApiUtils";
 
-export function getPosts() {
-  return getRequest('https://api.github.com/repos/tormodny/gitbookdb/issues');
+export function getPosts(token) {
+  return getRequest('https://api.github.com/repos/tormodny/gitbookdb/issues', token);
 }
 
 export function postPost(title, body, token) {
@@ -11,6 +11,7 @@ export function postPost(title, body, token) {
   }, token);
 }
 
-export function getComments(post) {
-  return getRequest(`https://api.github.com/repos/tormodny/gitbookdb/issues/${post.number}/comments`);
+export function getComments(post, token) {
+  console.log(token);
+  return getRequest(`https://api.github.com/repos/tormodny/gitbookdb/issues/${post.number}/comments`, token);
 }

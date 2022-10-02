@@ -6,7 +6,7 @@ function Comment ({ comment }) {
       <div className="min-w-[48px]">
         <img src={comment.user.avatar_url} className="rounded-full w-12" />
       </div>
-      <div className="flex flex-col p-2 text-left gap-4">
+      <div className="flex flex-col p-2 gap-4">
         <p className="whitespace-normal">{comment.body}</p>
         <i className="font-light text-sm">Posted by {comment.user.login} <ReactTimeAgo date={new Date(comment.created_at)} locale="en-US"/></i>
       </div>

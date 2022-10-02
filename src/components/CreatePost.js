@@ -1,11 +1,13 @@
 import { TextField, Button } from "@mui/material";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { postPost } from "../api/Posts";
+import { TokenContext } from "../App";
 
 function CreatePost () {
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
-  const [token, setToken] = useState("");
+
+  const { token } = useContext(TokenContext);
 
   function publishPost () {
     postPost(title, body, token);
@@ -18,7 +20,6 @@ function CreatePost () {
       <h2>Create a post</h2>
       <TextField label="Title" value={title} onChange={e => setTitle(e.target.value)} className="bg-white"></TextField>
       <TextField multiline rows={4} label="Body" value={body} onChange={e => setBody(e.target.value)} className="bg-white"></TextField>
-      <TextField label="Token" value={token} onChange={e => setToken(e.target.value)} className="bg-white" helperText="Used for authentication"></TextField>
       <Button variant="contained" onClick={publishPost}>Publish</Button>
     </div>
   );

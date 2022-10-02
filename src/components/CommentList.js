@@ -1,13 +1,16 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { getComments, getPosts } from "../api/Posts";
+import { TokenContext } from "../App";
 import Comment from "./Comment";
 
 function CommentList ({ post }) {
   const [comments, setComments] = useState(null);
 
+  const { token } = useContext(TokenContext);
+
   useEffect(() => {
     if (!comments) {
-      getComments(post).then(data => setComments(data));
+      getComments(post, token).then(data => setComments(data));
     }
   })
 

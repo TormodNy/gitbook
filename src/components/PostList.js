@@ -1,14 +1,16 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { getPosts } from "../api/Posts";
+import { TokenContext } from "../App";
 import CreatePost from "./CreatePost";
 import Post from "./Post";
 
 function PostList () {
   const [posts, setPosts] = useState(null);
+  const { token } = useContext(TokenContext);
 
   useEffect(() => {
     if (!posts) {
-      getPosts().then(data => setPosts(data));
+      getPosts(token).then(data => setPosts(data));
     }
   })
 
