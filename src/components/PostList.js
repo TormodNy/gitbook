@@ -15,10 +15,14 @@ function PostList () {
     }
   }, [posts])
 
+  function addPost (post) {
+    setPosts([post, ...posts])
+  }
+
   return (
     <div className="m-auto pt-2 p-6 xl:w-[50vw] md:w-[80vw] flex flex-col gap-2 bg-slate-200 rounded-lg">
       <h2>Posts</h2>
-      <CreatePost />
+      <CreatePost addPost={addPost} />
 
       <RefreshBar setPosts={setPosts} />
 

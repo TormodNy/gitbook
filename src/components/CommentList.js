@@ -9,6 +9,10 @@ function CommentList ({ post }) {
 
   const { token } = useContext(UserContext);
 
+  function addComment (comment) {
+    setComments([comment, ...comments]);
+  }
+
   useEffect(() => {
     if (!comments) {
       getComments(post, token).then(data => setComments(data));
@@ -22,7 +26,7 @@ function CommentList ({ post }) {
         : <p>No comments found</p>
       }
 
-      <CreateComment post={post} />
+      <CreateComment post={post} addComment={addComment} />
     </div>
   );
 }

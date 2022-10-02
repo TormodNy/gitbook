@@ -7,7 +7,7 @@ function RefreshBar ({ setPosts }) {
   }
 
   return (
-    <div className="w-full sticky top-4">
+    <div className="w-full sticky top-4 z-50">
       <Button variant="contained" fullWidth onClick={refresh}>
         <RefreshIcon className="mr-2" />
         Refresh

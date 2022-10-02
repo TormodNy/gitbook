@@ -3,7 +3,7 @@ import { useContext, useState } from "react";
 import { postPost } from "../api/Posts";
 import { UserContext } from "../App";
 
-function CreatePost () {
+function CreatePost ({ addPost }) {
   const titleCharLimit = 60;
   const bodyCharLimit = 1000;
 
@@ -12,10 +12,12 @@ function CreatePost () {
 
   const { token } = useContext(UserContext);
 
-  function publishPost () {
-    postPost(title, body, token);
+  async function publishPost () {
     setTitle("");
     setBody("");
+    
+    const post = await postPost(title, body, token);
+    addPost(post);
   }
 
   function updateTitle (e) {
