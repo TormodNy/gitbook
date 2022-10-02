@@ -17,12 +17,11 @@ function PostList () {
   return (
     <div className="m-auto pt-1 p-4 xl:w-[50vw] md:w-[80vw] flex flex-col gap-2 bg-slate-200">
       <h2>Posts</h2>
+      <CreatePost />
       {posts
         ? posts.map(post => (<Post key={post.id} post={post} />))
         : <p>No posts found</p>
       }
-
-      <CreatePost />
     </div>
   );
 }

@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { getComments, getPosts } from "../api/Posts";
 import { TokenContext } from "../App";
 import Comment from "./Comment";
+import CreateComment from "./CreateComment";
 
 function CommentList ({ post }) {
   const [comments, setComments] = useState(null);
@@ -21,7 +22,7 @@ function CommentList ({ post }) {
         : <p>No comments found</p>
       }
 
-      {/* <CreateComment /> */}
+      <CreateComment post={post} />
     </div>
   );
 }

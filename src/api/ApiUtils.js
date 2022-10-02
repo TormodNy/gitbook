@@ -25,5 +25,5 @@ export function postRequest (url, data, token) {
   }
 
   return axios.post(url, data, getOptions(token))
-  .then(response => response.data);
+    .then(response => response.data);
 }

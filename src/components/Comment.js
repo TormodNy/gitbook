@@ -1,4 +1,4 @@
-import ReactTimeAgo from 'react-time-ago'
+import ReactTimeAgo from 'react-time-ago';
 
 function Comment ({ comment }) {
   return (

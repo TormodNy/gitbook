@@ -12,6 +12,10 @@ export function postPost(title, body, token) {
 }
 
 export function getComments(post, token) {
-  console.log(token);
   return getRequest(`https://api.github.com/repos/tormodny/gitbookdb/issues/${post.number}/comments`, token);
 }
+
+export function postComments(post, body, token) {
+  return postRequest(`https://api.github.com/repos/tormodny/gitbookdb/issues/${post.number}/comments`, {body}, token);
+}
+
