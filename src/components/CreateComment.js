@@ -4,8 +4,9 @@ import { postComments } from "../api/Posts";
 import { UserContext } from "../App";
 
 function CreateComment ({ post }) {
-  const [body, setBody] = useState("");
+  const bodyCharLimit = 1000;
 
+  const [body, setBody] = useState("");
   const { token } = useContext(UserContext);
 
   function publishComment () {
@@ -13,9 +14,22 @@ function CreateComment ({ post }) {
     setBody("");
   }
 
+  function updateBody (e) {
+    setBody(e.target.value.substring(0, bodyCharLimit));
+  }
+
   return (
     <div className="flex flex-col gap-2 pt-1 p-2 bg-slate-100">
-      <TextField multiline rows={2} label="Comment" value={body} onChange={e => setBody(e.target.value)} InputProps={{className: "bg-white"}}></TextField>
+      <TextField
+        multiline
+        minRows={2}
+        maxRows={10}
+        label="Comment"
+        value={body}
+        onChange={updateBody}
+        InputProps={{className: "bg-white"}}
+        helperText={bodyCharLimit - body.length + " characters remaining"}
+      />
       <Button variant="contained" onClick={publishComment}>Publish</Button>
     </div>
   );
