@@ -18,8 +18,8 @@ function CreatePost () {
   return (
     <div className="flex flex-col gap-2 pt-1 p-2 bg-slate-100">
       <h2>Create a post</h2>
-      <TextField label="Title" value={title} onChange={e => setTitle(e.target.value)} className="bg-white"></TextField>
-      <TextField multiline rows={4} label="Body" value={body} onChange={e => setBody(e.target.value)} className="bg-white"></TextField>
+      <TextField label="Title" value={title} onChange={e => setTitle(e.target.value)} InputProps={{className: "bg-white"}}></TextField>
+      <TextField multiline rows={4} label="Body" value={body} onChange={e => setBody(e.target.value)} InputProps={{className: "bg-white"}}></TextField>
       <Button variant="contained" onClick={publishPost}>Publish</Button>
     </div>
   );

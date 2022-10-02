@@ -19,7 +19,7 @@ function UserMenu () {
         <Card className="relative top-4 right-48 w-64 p-2">
           <CardContent>
             <Typography variant="h6">Add token</Typography>
-            <TextField label="Token" value={token} onChange={e => setToken(e.target.value)} className="bg-white" helperText="Used for authentication"></TextField>
+            <TextField label="Token" value={token} onChange={e => setToken(e.target.value)} InputProps={{className: "bg-white"}} helperText="Used for authentication"></TextField>
           </CardContent>
         </Card>
         : null

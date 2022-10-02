@@ -10,6 +10,19 @@ function getOptions (token) {
   };
 }
 
+export async function checkRequest (url, token) {
+  if (!token) {
+    console.warn("Token is empty.");
+  }
+
+  return await axios.get(url, {
+    ...getOptions(token),
+    validateStatus: (status) => status < 500,
+  })
+    .then(response => response.status === 200)
+    .catch(error => console.log(error));
+}
+
 export function getRequest (url, token) {
   if (!token) {
     console.warn("Token is empty.");

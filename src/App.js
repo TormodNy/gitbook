@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import LoginPage from "./components/LoginPage";
 import PostList from "./components/PostList";
 import UserMenu from "./components/UserMenu";
 
@@ -15,9 +16,15 @@ function App() {
           <p>This is a social media platform utilizing a GitHub repository as a database.</p>
         </div>
         
-        <PostList />
-
-        <UserMenu />
+        {token
+          ?
+            <>
+              <PostList />
+              <UserMenu />
+            </>
+          : <LoginPage />
+        }
+        
       </div>
     </TokenContext.Provider>
   );
