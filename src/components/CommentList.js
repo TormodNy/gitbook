@@ -7,15 +7,13 @@ import CreateComment from "./CreateComment";
 function CommentList ({ post }) {
   const [comments, setComments] = useState(null);
 
-  const { token } = useContext(UserContext);
-
   function addComment (comment) {
     setComments([comment, ...comments]);
   }
 
   useEffect(() => {
     if (!comments) {
-      getComments(post, token).then(data => setComments(data));
+      getComments(post).then(data => setComments(data));
     }
   })
 

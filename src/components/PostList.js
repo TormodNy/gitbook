@@ -7,11 +7,10 @@ import RefreshBar from "./RefreshBar";
 
 function PostList () {
   const [posts, setPosts] = useState(null);
-  const { token } = useContext(UserContext);
 
   useEffect(() => {
     if (!posts) {
-      getPosts(token).then(data => setPosts(data));
+      getPosts().then(data => setPosts(data));
     }
   }, [posts])
 

@@ -1,14 +1,18 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { PageRouter } from "./pages/PageRouter";
+import { getUser } from "./api/Users";
 
 export const UserContext = React.createContext();
 
 function App() {
-  const [token, setToken] = useState("");
   const [user, setUser] = useState(null);
 
+  useEffect(() => {
+    setUser(getUser());
+  }, []);
+
   return (
-    <UserContext.Provider value={{ token, setToken, user, setUser }}>
+    <UserContext.Provider value={{ user, setUser }}>
       <PageRouter />
     </UserContext.Provider>
   );

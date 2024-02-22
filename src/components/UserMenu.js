@@ -4,11 +4,10 @@ import { UserContext } from "../App";
 
 function UserMenu () {
   const [open, setOpen] = useState(false);
-  const {setToken, user, setUser} = useContext(UserContext);
+  const {user, setUser} = useContext(UserContext);
 
   function logOut () {
     setUser(null);
-    setToken("");
   }
 
   return (
@@ -24,7 +23,7 @@ function UserMenu () {
             <Typography variant="h6" fontWeight="bold">{user.login}</Typography>
             <Typography fontWeight="light">{user.name}</Typography>
             <br />
-            <Button onClick={logOut} variant="contained">Log out</Button>
+            <Button onClick={logOut} disabled variant="contained">Log out</Button>
           </CardContent>
         </Card>
         : null

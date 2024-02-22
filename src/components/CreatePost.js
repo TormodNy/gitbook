@@ -10,13 +10,11 @@ function CreatePost ({ addPost }) {
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
 
-  const { token } = useContext(UserContext);
-
   async function publishPost () {
     setTitle("");
     setBody("");
     
-    const post = await postPost(title, body, token);
+    const post = await postPost(title, body);
     addPost(post);
   }
 

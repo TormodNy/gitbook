@@ -7,12 +7,11 @@ function CreateComment ({ post, addComment }) {
   const bodyCharLimit = 1000;
 
   const [body, setBody] = useState("");
-  const { token } = useContext(UserContext);
 
   async function publishComment () {
     setBody("");
     
-    const comment = await postComments(post, body, token);
+    const comment = await postComments(post, body);
     addComment(comment);
   }
 
