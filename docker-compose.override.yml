@@ -6,13 +6,11 @@ services:
     command: npm run start
     volumes:
       - ./frontend/src:/code/src
-    environment:
-      - WATCHPACK_POLLING=true
-    ports:
-      - 3000:3000
 
   proxy:
     build:
       target: proxy
     volumes:
       - "./proxy/dev.nginx.conf:/etc/nginx/conf.d/default.conf"
+    ports:
+      - 3000:3001
