@@ -7,8 +7,12 @@ export const UserContext = React.createContext();
 function App() {
   const [user, setUser] = useState(null);
 
+  async function fetchUser() {
+    setUser(await getUser());
+  }
+
   useEffect(() => {
-    setUser(getUser());
+    fetchUser();
   }, []);
 
   return (

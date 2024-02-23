@@ -1,6 +1,5 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { getPosts } from "../api/Posts";
-import { UserContext } from "../App";
 import CreatePost from "./CreatePost";
 import Post from "./Post";
 import RefreshBar from "./RefreshBar";
