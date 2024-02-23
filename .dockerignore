@@ -1,5 +1,6 @@
-node_modules/
-secrets/
-oauth/
-README.md
-docker-compose.yml
+*
+!/frontend/public
+!/frontend/src
+!/frontend/package-lock.json
+!/frontend/package.json
+!/frontend/tailwind.config.js

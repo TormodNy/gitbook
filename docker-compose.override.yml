@@ -1,14 +1,18 @@
 services:
   spa:
     build:
-      dockerfile: ./src/Dockerfile
+      dockerfile: ./frontend/Dockerfile
       target: dev
     command: npm run start
     volumes:
-      - ./src:/src/src
+      - ./frontend/src:/code/src
+    environment:
+      - WATCHPACK_POLLING=true
     ports:
-      - 3000
+      - 3000:3000
 
   proxy:
+    build:
+      target: proxy
     volumes:
       - "./proxy/dev.nginx.conf:/etc/nginx/conf.d/default.conf"

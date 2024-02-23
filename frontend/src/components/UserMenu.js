@@ -10,6 +10,10 @@ function UserMenu () {
     setUser(null);
   }
 
+  if (!user) {
+    return null;
+  }
+
   return (
     <div className="fixed right-4 top-4 w-16 h-16">
       <button onClick={() => setOpen(!open)} className="bg-blue-500 rounded-full w-16 h-16 transition-opacity hover:opacity-50">

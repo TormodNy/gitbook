@@ -3,8 +3,8 @@ services:
     depends_on:
       - oauth2
     build:
-      dockerfile: ./src/Dockerfile
-      target: proxy
+      dockerfile: ./frontend/Dockerfile
+      target: proxy-server
     secrets:
       - source: CERT_PUB
         target: localhost.pem
