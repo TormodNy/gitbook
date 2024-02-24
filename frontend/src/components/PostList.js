@@ -4,17 +4,23 @@ import CreatePost from "./CreatePost";
 import Post from "./Post";
 import RefreshBar from "./RefreshBar";
 
-function PostList () {
+function PostList() {
   const [posts, setPosts] = useState(null);
 
   useEffect(() => {
     if (!posts) {
-      getPosts().then(data => setPosts(data));
+      getPosts().then((data) => setPosts(data));
     }
-  }, [posts])
+  }, [posts]);
 
-  function addPost (post) {
-    setPosts([post, ...posts])
+  function addPost(post) {
+    setPosts([post, ...posts]);
+  }
+
+  function refreshPost(updatedPost) {
+    setPosts(
+      posts.map((post) => (post.id === updatedPost.id ? updatedPost : post))
+    );
   }
 
   return (
@@ -24,10 +30,11 @@ function PostList () {
 
       <RefreshBar setPosts={setPosts} />
 
-      {posts
-        ? posts.map(post => (<Post key={post.id} post={post} />))
-        : <p>No posts found</p>
-      }
+      {posts ? (
+        posts.map((post) => <Post key={post.id} post={post} refreshPost={refreshPost} />)
+      ) : (
+        <p>No posts found</p>
+      )}
     </div>
   );
 }

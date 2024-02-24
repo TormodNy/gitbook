@@ -1,6 +1,10 @@
-import { Navigate, Outlet } from "react-router-dom";
+import { useContext } from "react";
+import { Outlet } from "react-router-dom";
+import { UserContext } from "../App";
 
 export function RootPage() {
+  const { user } = useContext(UserContext);
+
   return (
     <div className="flex flex-col gap-2 w-full p-2 pb-16">
       <div className="text-center">
@@ -11,7 +15,7 @@ export function RootPage() {
         </p>
       </div>
 
-      <Outlet />
+      {user && <Outlet />}
     </div>
   );
 }
