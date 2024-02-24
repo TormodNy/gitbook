@@ -4,8 +4,8 @@ import { useState, useContext } from "react";
 import { UserContext } from "../App";
 import { patchPost } from "../api/Posts";
 import { EditButtons } from "./EditButtons";
-import { BODY_CHAR_LIMIT, TITLE_CHAR_LIMIT } from "./CreatePost";
-import { TextField } from "@mui/material";
+import { TitleInput } from "./common/TitleInput";
+import { BodyInput } from "./common/BodyInput";
 
 function Post({ post, refreshPost }) {
   const [editing, setEditing] = useState(false);
@@ -13,14 +13,6 @@ function Post({ post, refreshPost }) {
 
   const [title, setTitle] = useState(post.title);
   const [body, setBody] = useState(post.body);
-
-  function updateTitle(e) {
-    setTitle(e.target.value.substring(0, TITLE_CHAR_LIMIT));
-  }
-
-  function updateBody(e) {
-    setBody(e.target.value.substring(0, BODY_CHAR_LIMIT));
-  }
 
   async function publishEdit() {
     const updatedPost = await patchPost(post, title, body);
@@ -38,15 +30,10 @@ function Post({ post, refreshPost }) {
           {!editing ? (
             <h3>{post.title}</h3>
           ) : (
-            <TextField
-              label="Title"
+            <TitleInput
+              title={title}
+              setTitle={setTitle}
               className="flex-grow"
-              value={title}
-              onChange={updateTitle}
-              InputProps={{ className: "bg-white" }}
-              helperText={
-                TITLE_CHAR_LIMIT - title.length + " characters remaining"
-              }
             />
           )}
           {user.id === post.user.id && (
@@ -60,16 +47,7 @@ function Post({ post, refreshPost }) {
         {!editing ? (
           <p className="whitespace-normal">{post.body}</p>
         ) : (
-          <TextField
-            multiline
-            minRows={4}
-            maxRows={10}
-            label="Body"
-            value={body}
-            onChange={updateBody}
-            InputProps={{ className: "bg-white" }}
-            helperText={BODY_CHAR_LIMIT - body.length + " characters remaining"}
-          />
+          <BodyInput body={body} setBody={setBody} />
         )}
         <i className="font-light text-sm">
           Posted by {post.user.login}{" "}

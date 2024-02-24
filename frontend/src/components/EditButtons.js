@@ -6,7 +6,7 @@ import CloseIcon from "@mui/icons-material/Close";
 export function EditButtons({ editing, setEditing, publishEdit }) {
   if (editing) {
     return (
-      <div className="flex gap-2">
+      <div className="flex gap-2 h-10">
         <IconButton onClick={() => publishEdit()} color="primary">
           <CheckIcon />
         </IconButton>
@@ -18,7 +18,11 @@ export function EditButtons({ editing, setEditing, publishEdit }) {
   }
 
   return (
-    <IconButton onClick={() => setEditing(true)} color="primary">
+    <IconButton
+      onClick={() => setEditing(true)}
+      color="primary"
+      className="h-10"
+    >
       <EditIcon />
     </IconButton>
   );
