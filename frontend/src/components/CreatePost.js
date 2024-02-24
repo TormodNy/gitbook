@@ -1,12 +1,11 @@
 import { TextField, Button } from "@mui/material";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { postPost } from "../api/Posts";
-import { UserContext } from "../App";
+
+export const TITLE_CHAR_LIMIT = 60;
+export const BODY_CHAR_LIMIT = 1000;
 
 function CreatePost ({ addPost }) {
-  const titleCharLimit = 60;
-  const bodyCharLimit = 1000;
-
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
 
@@ -19,11 +18,11 @@ function CreatePost ({ addPost }) {
   }
 
   function updateTitle (e) {
-    setTitle(e.target.value.substring(0, titleCharLimit));
+    setTitle(e.target.value.substring(0, TITLE_CHAR_LIMIT));
   }
 
   function updateBody (e) {
-    setBody(e.target.value.substring(0, bodyCharLimit));
+    setBody(e.target.value.substring(0, BODY_CHAR_LIMIT));
   }
 
   return (
@@ -34,7 +33,7 @@ function CreatePost ({ addPost }) {
         value={title}
         onChange={updateTitle}
         InputProps={{className: "bg-white"}}
-        helperText={titleCharLimit - title.length + " characters remaining"}
+        helperText={TITLE_CHAR_LIMIT - title.length + " characters remaining"}
       />
       <TextField
         multiline
@@ -44,7 +43,7 @@ function CreatePost ({ addPost }) {
         value={body}
         onChange={updateBody}
         InputProps={{className: "bg-white"}}
-        helperText={bodyCharLimit - body.length + " characters remaining"}
+        helperText={BODY_CHAR_LIMIT - body.length + " characters remaining"}
       />
       <Button variant="contained" onClick={publishPost}>Publish</Button>
     </div>

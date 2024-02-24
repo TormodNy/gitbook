@@ -11,6 +11,13 @@ export async function postPost(title, body) {
   });
 }
 
+export async function patchPost(post, title, body) {
+  return await postRequest(`https://localhost/api/repos/tormodny/gitbookdb/issues/${post.number}`, {
+    title,
+    body,
+  });
+}
+
 export async function getComments(post) {
   return await getRequest(`https://localhost/api/repos/tormodny/gitbookdb/issues/${post.number}/comments`);
 }

@@ -22,3 +22,10 @@ export async function postRequest(url, data) {
     .then((response) => response.data)
     .catch((error) => null);
 }
+
+export async function patchRequest(url, data) {
+  return await axios
+    .patch(url, data, getOptions())
+    .then((response) => response.data)
+    .catch((error) => null);
+}
