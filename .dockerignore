@@ -4,3 +4,4 @@
 !/frontend/package-lock.json
 !/frontend/package.json
 !/frontend/tailwind.config.js
+!/oauth2/run.sh
