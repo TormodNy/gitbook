@@ -45,3 +45,10 @@ export async function patchComment(comment, body) {
     { body }
   );
 }
+
+export async function postPostReaction(post, reaction) {
+  return await postRequest(
+    `https://localhost/api/repos/tormodny/gitbookdb/issues/${post.number}/reactions`,
+    { content: reaction }
+  );
+}

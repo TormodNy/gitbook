@@ -29,3 +29,10 @@ export async function patchRequest(url, data) {
     .then((response) => response.data)
     .catch((error) => null);
 }
+
+export async function deleteRequest(url, data) {
+  return await axios
+    .delete(url, getOptions())
+    .then((response) => response.data)
+    .catch((error) => null);
+}
