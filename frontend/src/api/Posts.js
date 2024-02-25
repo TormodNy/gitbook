@@ -1,4 +1,9 @@
-import { getRequest, patchRequest, postRequest } from "./ApiUtils";
+import {
+  deleteRequest,
+  getRequest,
+  patchRequest,
+  postRequest,
+} from "./ApiUtils";
 
 export async function getPosts() {
   return await getRequest(
@@ -43,5 +48,43 @@ export async function patchComment(comment, body) {
   return await patchRequest(
     `https://localhost/api/repos/tormodny/gitbookdb/issues/comments/${comment.id}`,
     { body }
+  );
+}
+
+export async function getPostReactions(post) {
+  return await getRequest(
+    `https://localhost/api/repos/tormodny/gitbookdb/issues/${post.number}/reactions`
+  );
+}
+
+export async function postPostReaction(post, reaction) {
+  return await postRequest(
+    `https://localhost/api/repos/tormodny/gitbookdb/issues/${post.number}/reactions`,
+    { content: reaction }
+  );
+}
+
+export async function deletePostReaction(post, reaction) {
+  return await deleteRequest(
+    `https://localhost/api/repos/tormodny/gitbookdb/issues/${post.number}/reactions/${reaction.id}`
+  );
+}
+
+export async function getCommentReactions(comment) {
+  return await getRequest(
+    `https://localhost/api/repos/tormodny/gitbookdb/issues/comments/${comment.id}/reactions`
+  );
+}
+
+export async function postCommentReaction(comment, reaction) {
+  return await postRequest(
+    `https://localhost/api/repos/tormodny/gitbookdb/issues/comments/${comment.id}/reactions`,
+    { content: reaction }
+  );
+}
+
+export async function deleteCommentReaction(comment, reaction) {
+  return await deleteRequest(
+    `https://localhost/api/repos/tormodny/gitbookdb/issues/comments/${comment.id}/reactions/${reaction.id}`
   );
 }

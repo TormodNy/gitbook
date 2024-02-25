@@ -6,6 +6,7 @@ import { patchPost } from "../api/Posts";
 import { EditButtons } from "./EditButtons";
 import { TitleInput } from "./common/TitleInput";
 import { BodyInput } from "./common/BodyInput";
+import { Reactions } from "./Reactions";
 
 function Post({ post, refreshPost }) {
   const [editing, setEditing] = useState(false);
@@ -21,7 +22,7 @@ function Post({ post, refreshPost }) {
   }
 
   return (
-    <div className="flex bg-slate-100 p-4 gap-2 rounded-md">
+    <div className="flex bg-slate-100 p-2 gap-2 rounded-md">
       <div className="min-w-[48px]">
         <img src={post.user.avatar_url} className="rounded-full w-12" />
       </div>
@@ -53,6 +54,8 @@ function Post({ post, refreshPost }) {
           Posted by {post.user.login}{" "}
           <ReactTimeAgo date={new Date(post.created_at)} locale="en-US" />
         </i>
+
+        <Reactions post={post} refreshPost={refreshPost} />
 
         <CommentList post={post} />
       </div>
