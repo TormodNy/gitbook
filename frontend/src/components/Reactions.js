@@ -2,8 +2,11 @@ import { IconButton, Menu, MenuItem } from "@mui/material";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import { useContext, useEffect, useRef, useState } from "react";
 import {
+  deleteCommentReaction,
   deletePostReaction,
+  getCommentReactions,
   getPostReactions,
+  postCommentReaction,
   postPostReaction,
 } from "../api/Posts";
 import { Reaction } from "./Reaction";
@@ -29,13 +32,16 @@ export const REACTION_MAP = {
 };
 
 export function Reactions({ post, refreshPost }) {
+  const isComment = post.url.includes("/comments");
   const anchorEl = useRef(null);
   const [open, setOpen] = useState(false);
   const [reactions, setReactions] = useState(null);
   const { user } = useContext(UserContext);
 
   async function handleAddReaction(reactionName) {
-    const reaction = await postPostReaction(post, reactionName);
+    const reaction = isComment
+      ? await postCommentReaction(post, reactionName)
+      : await postPostReaction(post, reactionName);
     refreshPost({
       ...post,
       reactions: {
@@ -47,7 +53,12 @@ export function Reactions({ post, refreshPost }) {
   }
 
   async function handleDeleteReaction(reactionName, userReaction) {
-    await deletePostReaction(post, userReaction);
+    if (isComment) {
+      await deleteCommentReaction(post, userReaction);
+    } else {
+      await deletePostReaction(post, userReaction);
+    }
+
     refreshPost({
       ...post,
       reactions: {
@@ -60,7 +71,11 @@ export function Reactions({ post, refreshPost }) {
 
   useEffect(() => {
     if (!reactions) {
-      getPostReactions(post).then((data) => setReactions(data));
+      if (isComment) {
+        getCommentReactions(post).then((data) => setReactions(data));
+      } else {
+        getPostReactions(post).then((data) => setReactions(data));
+      }
     }
   }, [post, reactions]);
 
@@ -115,7 +130,6 @@ export function Reactions({ post, refreshPost }) {
         anchorEl={anchorEl.current}
         open={open}
         onClose={() => setOpen(false)}
-        className="horiz-menu"
         MenuListProps={{
           style: {
             display: "flex",

@@ -4,6 +4,7 @@ import { UserContext } from "../App";
 import { BodyInput } from "./common/BodyInput";
 import { EditButtons } from "./EditButtons";
 import { patchComment } from "../api/Posts";
+import { Reactions } from "./Reactions";
 
 function Comment({ comment, refreshComment }) {
   const [editing, setEditing] = useState(false);
@@ -41,6 +42,8 @@ function Comment({ comment, refreshComment }) {
           Posted by {comment.user.login}{" "}
           <ReactTimeAgo date={new Date(comment.created_at)} locale="en-US" />
         </i>
+
+        <Reactions post={comment} refreshPost={refreshComment} />
       </div>
     </div>
   );

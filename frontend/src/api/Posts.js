@@ -69,3 +69,22 @@ export async function deletePostReaction(post, reaction) {
     `https://localhost/api/repos/tormodny/gitbookdb/issues/${post.number}/reactions/${reaction.id}`
   );
 }
+
+export async function getCommentReactions(comment) {
+  return await getRequest(
+    `https://localhost/api/repos/tormodny/gitbookdb/issues/comments/${comment.id}/reactions`
+  );
+}
+
+export async function postCommentReaction(comment, reaction) {
+  return await postRequest(
+    `https://localhost/api/repos/tormodny/gitbookdb/issues/comments/${comment.id}/reactions`,
+    { content: reaction }
+  );
+}
+
+export async function deleteCommentReaction(comment, reaction) {
+  return await deleteRequest(
+    `https://localhost/api/repos/tormodny/gitbookdb/issues/comments/${comment.id}/reactions/${reaction.id}`
+  );
+}
