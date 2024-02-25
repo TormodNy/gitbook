@@ -1,5 +1,7 @@
 import { getRequest } from "./ApiUtils";
 
+const host = window.location.hostname;
+
 export async function getUser() {
-  return await getRequest('https://localhost/api/user');
+  return await getRequest(`https://${host}/api/user`);
 }

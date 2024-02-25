@@ -21,7 +21,7 @@ services:
       dockerfile: ./oauth2/Dockerfile
       target: oauth2
     environment:
-      - OAUTH2_PROXY_CLIENT_ID=3acaf6abc4c9ececc46f
+      - OAUTH2_PROXY_CLIENT_ID=${CLIENT_ID}
       - OAUTH2_PROXY_COOKIE_DOMAINS=${SERVER_NAME}
       - OAUTH2_PROXY_WHITELIST_DOMAINS=${SERVER_NAME}
       - OAUTH2_PROXY_REDIRECT_URL=https://${SERVER_NAME}/oauth2/callback
@@ -29,7 +29,6 @@ services:
       - "./oauth2/oauth2-proxy.cfg:/oauth2-proxy.cfg:ro"
     secrets:
       - CLIENT_SECRET
-      - COOKIE_SECRET
 
 secrets:
   CERT_PUB:
@@ -38,5 +37,3 @@ secrets:
     file: ./secrets/localhost-key.pem
   CLIENT_SECRET:
     file: ./secrets/CLIENT_SECRET.txt
-  COOKIE_SECRET:
-    file: ./secrets/COOKIE_SECRET.txt
