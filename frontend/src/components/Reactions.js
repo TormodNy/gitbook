@@ -12,9 +12,31 @@ const variantColor = {
   filled: "white",
 };
 
-export function Reactions({ post }) {
+export const REACTION_MAP = {
+  "🔥": "+1",
+  "🚽": "-1",
+  "🤠": "laugh",
+  "🙃": "confused",
+  "🍕": "heart",
+  "💸": "hooray",
+  "🦆": "rocket",
+  "🙈": "eyes",
+};
+
+export function Reactions({ post, refreshPost }) {
   const anchorEl = useRef(null);
   const [open, setOpen] = useState(false);
+
+  async function handleReaction(reactionName) {
+    await postPostReaction(post, reactionName);
+    refreshPost({
+      ...post,
+      reactions: {
+        ...post.reactions,
+        [reactionName]: post.reactions[reactionName] + 1,
+      },
+    });
+  }
 
   return (
     <div className="flex gap-4 items-center">
@@ -32,14 +54,16 @@ export function Reactions({ post }) {
       </IconButton>
 
       <div className="flex gap-1">
-        <Reaction reaction="🔥" value={post.reactions["+1"]} />
-        <Reaction reaction="🚽" value={post.reactions["-1"]} />
-        <Reaction reaction="🤠" value={post.reactions["laugh"]} />
-        <Reaction reaction="🙃" value={post.reactions["confused"]} />
-        <Reaction reaction="🍕" value={post.reactions["heart"]} />
-        <Reaction reaction="💸" value={post.reactions["hooray"]} />
-        <Reaction reaction="🦆" value={post.reactions["rocket"]} />
-        <Reaction reaction="🙈" value={post.reactions["eyes"]} />
+        {Object.entries(REACTION_MAP).map(([reaction, reactionName]) => (
+          <Reaction
+            key={reaction}
+            post={post}
+            refreshPost={refreshPost}
+            reaction={reaction}
+            value={post.reactions[reactionName]}
+            handleReaction={() => handleReaction(reactionName)}
+          />
+        ))}
       </div>
 
       <Menu
@@ -53,16 +77,11 @@ export function Reactions({ post }) {
           },
         }}
       >
-        <MenuItem onClick={() => postPostReaction(post, "+1")}>🔥</MenuItem>
-        <MenuItem onClick={() => postPostReaction(post, "-1")}>🚽</MenuItem>
-        <MenuItem onClick={() => postPostReaction(post, "laugh")}>🤠</MenuItem>
-        <MenuItem onClick={() => postPostReaction(post, "confused")}>
-          🙃
-        </MenuItem>
-        <MenuItem onClick={() => postPostReaction(post, "heart")}>🍕</MenuItem>
-        <MenuItem onClick={() => postPostReaction(post, "hooray")}>💸</MenuItem>
-        <MenuItem onClick={() => postPostReaction(post, "rocket")}>🦆</MenuItem>
-        <MenuItem onClick={() => postPostReaction(post, "eyes")}>🙈</MenuItem>
+        {Object.entries(REACTION_MAP).map(([reaction, reactionName]) => (
+          <MenuItem key={reaction} onClick={() => handleReaction(reactionName)}>
+            {reaction}
+          </MenuItem>
+        ))}
       </Menu>
     </div>
   );

@@ -55,7 +55,7 @@ function Post({ post, refreshPost }) {
           <ReactTimeAgo date={new Date(post.created_at)} locale="en-US" />
         </i>
 
-        <Reactions post={post} />
+        <Reactions post={post} refreshPost={refreshPost} />
 
         <CommentList post={post} />
       </div>
