@@ -1,8 +1,13 @@
 import { IconButton, Menu, MenuItem } from "@mui/material";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
-import { useRef, useState } from "react";
-import { postPostReaction } from "../api/Posts";
+import { useContext, useEffect, useRef, useState } from "react";
+import {
+  deletePostReaction,
+  getPostReactions,
+  postPostReaction,
+} from "../api/Posts";
 import { Reaction } from "./Reaction";
+import { UserContext } from "../App";
 
 const variantBackgroundColor = {
   filled: "primary.main",
@@ -26,9 +31,11 @@ export const REACTION_MAP = {
 export function Reactions({ post, refreshPost }) {
   const anchorEl = useRef(null);
   const [open, setOpen] = useState(false);
+  const [reactions, setReactions] = useState(null);
+  const { user } = useContext(UserContext);
 
-  async function handleReaction(reactionName) {
-    await postPostReaction(post, reactionName);
+  async function handleAddReaction(reactionName) {
+    const reaction = await postPostReaction(post, reactionName);
     refreshPost({
       ...post,
       reactions: {
@@ -36,6 +43,39 @@ export function Reactions({ post, refreshPost }) {
         [reactionName]: post.reactions[reactionName] + 1,
       },
     });
+    addReaction(reaction);
+  }
+
+  async function handleDeleteReaction(reactionName, userReaction) {
+    await deletePostReaction(post, userReaction);
+    refreshPost({
+      ...post,
+      reactions: {
+        ...post.reactions,
+        [reactionName]: post.reactions[reactionName] - 1,
+      },
+    });
+    deleteReaction(userReaction);
+  }
+
+  useEffect(() => {
+    if (!reactions) {
+      getPostReactions(post).then((data) => setReactions(data));
+    }
+  }, [post, reactions]);
+
+  function addReaction(reaction) {
+    setReactions([reaction, ...reactions]);
+  }
+
+  function deleteReaction(deletedReaction) {
+    setReactions(
+      reactions.filter((reaction) => reaction.id !== deletedReaction.id)
+    );
+  }
+
+  if (!reactions) {
+    return;
   }
 
   return (
@@ -57,11 +97,16 @@ export function Reactions({ post, refreshPost }) {
         {Object.entries(REACTION_MAP).map(([reaction, reactionName]) => (
           <Reaction
             key={reaction}
-            post={post}
-            refreshPost={refreshPost}
             reaction={reaction}
+            reactionName={reactionName}
             value={post.reactions[reactionName]}
-            handleReaction={() => handleReaction(reactionName)}
+            handleAddReaction={handleAddReaction}
+            handleDeleteReaction={handleDeleteReaction}
+            userReaction={reactions.find(
+              (reaction) =>
+                reaction.user.id === user.id &&
+                reaction.content === reactionName
+            )}
           />
         ))}
       </div>
@@ -77,11 +122,24 @@ export function Reactions({ post, refreshPost }) {
           },
         }}
       >
-        {Object.entries(REACTION_MAP).map(([reaction, reactionName]) => (
-          <MenuItem key={reaction} onClick={() => handleReaction(reactionName)}>
-            {reaction}
-          </MenuItem>
-        ))}
+        {Object.entries(REACTION_MAP).map(([reaction, reactionName]) => {
+          const userReaction = reactions.find(
+            (reaction) =>
+              reaction.user.id === user.id && reaction.content === reactionName
+          );
+          return (
+            <MenuItem
+              key={reaction}
+              onClick={() =>
+                userReaction
+                  ? handleDeleteReaction(reactionName, userReaction)
+                  : handleAddReaction(reactionName)
+              }
+            >
+              {reaction}
+            </MenuItem>
+          );
+        })}
       </Menu>
     </div>
   );
