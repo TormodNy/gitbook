@@ -2,12 +2,14 @@ import { useEffect, useState } from "react";
 import { getComments } from "../api/Posts";
 import Comment from "./Comment";
 import CreateComment from "./CreateComment";
+import { Button } from "@mui/material";
 
 function CommentList({ post }) {
   const [comments, setComments] = useState(null);
+  const [count, setCount] = useState(1);
 
   function addComment(comment) {
-    setComments([comment, ...comments]);
+    setComments([...comments, comment]);
   }
 
   function refreshComment(updatedComment) {
@@ -26,14 +28,21 @@ function CommentList({ post }) {
 
   return (
     <div className="flex flex-col gap-2">
+      {comments && count < comments.length && (
+        <Button variant="outlined" onClick={() => setCount(count + 5)}>
+          Load more
+        </Button>
+      )}
       {comments ? (
-        comments.map((comment) => (
-          <Comment
-            key={comment.id}
-            comment={comment}
-            refreshComment={refreshComment}
-          />
-        ))
+        comments
+          .slice(comments.length - count)
+          .map((comment) => (
+            <Comment
+              key={comment.id}
+              comment={comment}
+              refreshComment={refreshComment}
+            />
+          ))
       ) : (
         <p>No comments found</p>
       )}
